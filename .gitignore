@@ -1,0 +1,6 @@
+cat > .gitignore << 'EOF'
+mycat
+mygrep
+.DS_Store
+.vscode/
+EOF
