@@ -1,78 +1,44 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
 
-    int flag_i = 0;
-    int flag_v= 0;
-    int flag_n = 0;
-    int flag_in = 0;
-    int flag_c = 0;
-
-    int opt;
-    while ((opt = getopt(argc, argv, "nbE")) != -1) {
-
-        switch (opt){
-            case 'i': flag_i = 0; = 1; break;
-            case 'v': flag_v= 0; = 1; break;
-            case 'n': flag_n = 0; = 1; break;
-            case 'in': flag_in = 0; = 1; break;
-            case 'c': flag_c = 0; = 1; break;
-
-            default:
-                fprintf(stderr, "Отсутствует флаг ");
-                return 1;
-        }
+    if (argc < 2){
+        fprintf(stderr, "Неправильный ввод");
+            return 1;
     }
 
-    FILE *file = NULL;
-        if (optind >= argc){
-            file = stdin;
-        }
-        else{
-            file = fopen(argv[optind], "r");
+    char line[1024];
+    char *pattern = argv[1];
+    int found = 0;
+
+    FILE *file = stdin;
+        if (argc >=3){
+            file = fopen(argv[2], "r");
             if (file == NULL) {
-                perror(argv[optind]);
+                perror(argv[2]);
                 return 1;
-            }
+            }   
         }
 
-    int c;
-    int line_number = 1;
-    int start_line = 1;
-
-    while ((c = fgetc(file)) != EOF) {
-        if (start_line) {
-            if (flag_b) {
-                if (c != '\n') {
-                    printf("%6d\t", line_number++);}
-                    start_line = 0;
-            }
-                else {
-                    if (flag_n){
-                        printf("%6d\t", line_number++);
-                        start_line = 0;
-                    }
-                else{
-                    start_line = 0;
-                }
-                }  
-            }      
-
-        if (c == '\n') {
-            if (flag_E) {
-                putchar('$');
-            }
-            putchar('\n');
-            start_line = 1;
-        } else {
-            putchar(c);
+    while (fgets(line,sizeof(line),file) != NULL){
+        if(strstr(line,pattern) != NULL){
+            printf("%s",line);
+            found = 1;
         }
-    }
+    } 
+
+    if(found < 1 ){printf("Данный pattern отсутствует\n");
+            return 1;
+        }
 
     if (file != stdin) {
         fclose(file);
     }
+    return 0;
 }
+    
+
 
 
