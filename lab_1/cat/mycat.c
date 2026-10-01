@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
             case 'E': flag_E = 1; break;
 
             default:
-                fprintf(stderr, "Отсутствует флаг ");
+                fprintf(stderr, "Некоректный  флаг ");
                 return 1;
         }
     }
