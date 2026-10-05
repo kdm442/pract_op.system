@@ -1,14 +1,14 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-CAT_SRC = lab_1/cat/mycat.c
-GREP_SRC = lab_1/grep/mygrep.c
-LS_SRC = lab_1/ls/myls.c
+CAT_SRC = cat/mycat.c
+GREP_SRC = grep/mygrep.c
+LS_SRC = ls/myls.c
+CHMOD_SRC = chmod/mychmod.c
 
 .PHONY: all clean
 
-
-all: mycat mygrep myls
+all: mycat mygrep myls mychmod
 
 mycat: $(CAT_SRC)
 	$(CC) $(CFLAGS) $(CAT_SRC) -o mycat
@@ -16,11 +16,11 @@ mycat: $(CAT_SRC)
 mygrep: $(GREP_SRC)
 	$(CC) $(CFLAGS) $(GREP_SRC) -o mygrep
 
-myls: $(LS_SRC_SRC)
-	$(CC) $(CFLAGS) $(LS_SRC_SRC) -o myls
+myls: $(LS_SRC)
+	$(CC) $(CFLAGS) $(LS_SRC) -o myls
 
-myls: $(CHMOD_SRC_SRC)
-	$(CC) $(CFLAGS) $(CHMOD_SRC_SRC) -o chmod
+mychmod: $(CHMOD_SRC)
+	$(CC) $(CFLAGS) $(CHMOD_SRC) -o mychmod
 
 clean:
-	rm -f mycat mygrep myls chmod
+	rm -f mycat mygrep myls mychmod
