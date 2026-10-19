@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     //проверка первого символа 
     if (mode_string[0] >= '0' && mode_string[0] <= '9') {
     if (strlen(mode_string) != 3) {
-        fprintf(stderr, "Нужны ровно три цифры прав\n");
+        fprintf(stderr, "Нужны  три/четыре  цифры прав\n");
         return 1;
     }
 
