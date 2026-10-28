@@ -1,9 +1,0 @@
-cat << 'EOF' > test.txt
-[INFO] Starting yt-dlp download script...
-[INFO] Fetching playlist from Yandex Music
-[ERROR] Failed to authenticate OAuth token
-[WARNING] Track "Hard Techno Mix 2026" already exists, skipping
-[INFO] Downloading: "Experimental Gabber track" [10/12]
-[ERROR] Connection timeout while fetching audio stems
-[INFO] Success: All tracks downloaded successfully
-EOF
