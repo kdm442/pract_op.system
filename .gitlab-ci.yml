@@ -1,38 +1,41 @@
 stages:
   - build
-  - test
+  - run
 
-# собираем все 3 программы
-build-job:
+build_fifo:
   stage: build
-  tags:
-    - ubuntu
   script:
-    - echo "Compiling practical task 6..."
-    - gcc -Wall pipe_task.c -o pipe
-    - gcc -Wall writer.c -o write
-    - gcc -Wall reader.c -o read
-    - echo "Compilation completed successfully."
+    - cd lab_3/fifo
+    - gcc -Wall -Wextra read.c -o read
+    - gcc -Wall -Wextra write.c -o write
   artifacts:
     paths:
-      - pipe_task
-      - writer
-      - reader
-    expire_in: 1 hour
+      - lab_3/fifo/read
+      - lab_3/fifo/write
 
-# Этап тестирования: запуск программ
-test-job:
-  stage: test
-  tags:
-    - ubuntu
+build_pipe:
+  stage: build
   script:
-    - echo "=== 1. Testing pipe and fork ==="
-    - chmod +x ./pipe ./write ./read
-    - ./pipe_task
-    - echo "=== 2. Testing fifo ==="
-    # Запускаем читателя 
-    - ./readr &
-    - ./write
-    # Ждем завершения фонового reader 
-    - wait
-    - echo "All tests passed!"
+    - cd lab_3/pipe
+    - gcc -Wall -Wextra pipe.c -o pipe
+  artifacts:
+    paths:
+      - lab_3/pipe/pipe
+
+run_fifo:
+  stage: run
+  needs:
+    - build_fifo
+  script:
+    - cd lab_3/fifo
+    - chmod +x read write
+    - ./read & ./write
+
+run_pipe:
+  stage: run
+  needs:
+    - build_pipe
+  script:
+    - cd lab_3/pipe
+    - chmod +x pipe
+    - ./pipe
