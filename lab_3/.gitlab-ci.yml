@@ -1,0 +1,38 @@
+stages:
+  - build
+  - test
+
+# собираем все 3 программы
+build-job:
+  stage: build
+  tags:
+    - ubuntu
+  script:
+    - echo "Compiling practical task 6..."
+    - gcc -Wall pipe_task.c -o pipe
+    - gcc -Wall writer.c -o write
+    - gcc -Wall reader.c -o read
+    - echo "Compilation completed successfully."
+  artifacts:
+    paths:
+      - pipe_task
+      - writer
+      - reader
+    expire_in: 1 hour
+
+# Этап тестирования: запуск программ
+test-job:
+  stage: test
+  tags:
+    - ubuntu
+  script:
+    - echo "=== 1. Testing pipe and fork ==="
+    - chmod +x ./pipe ./write ./read
+    - ./pipe_task
+    - echo "=== 2. Testing fifo ==="
+    # Запускаем читателя 
+    - ./readr &
+    - ./write
+    # Ждем завершения фонового reader 
+    - wait
+    - echo "All tests passed!"
