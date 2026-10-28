@@ -12,6 +12,8 @@ build_fifo:
     paths:
       - lab_3/fifo/read
       - lab_3/fifo/write
+tags:
+    - redos
 
 build_pipe:
   stage: build
@@ -21,6 +23,8 @@ build_pipe:
   artifacts:
     paths:
       - lab_3/pipe/pipe
+tags:
+    - redos
 
 run_fifo:
   stage: run
@@ -30,6 +34,8 @@ run_fifo:
     - cd lab_3/fifo
     - chmod +x read write
     - ./read & ./write
+tags:
+    - redos
 
 run_pipe:
   stage: run
@@ -39,3 +45,5 @@ run_pipe:
     - cd lab_3/pipe
     - chmod +x pipe
     - ./pipe
+tags:
+    - redos
