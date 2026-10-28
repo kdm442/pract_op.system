@@ -4,6 +4,8 @@ stages:
 
 build_fifo:
   stage: build
+  tags:
+    - redos
   script:
     - cd lab_3/fifo
     - gcc -Wall -Wextra read.c -o read
@@ -12,38 +14,36 @@ build_fifo:
     paths:
       - lab_3/fifo/read
       - lab_3/fifo/write
-tags:
-    - redos
 
 build_pipe:
   stage: build
+  tags:
+    - redos
   script:
     - cd lab_3/pipe
     - gcc -Wall -Wextra pipe.c -o pipe
   artifacts:
     paths:
       - lab_3/pipe/pipe
-tags:
-    - redos
 
 run_fifo:
   stage: run
+  tags:
+    - redos
   needs:
     - build_fifo
   script:
     - cd lab_3/fifo
     - chmod +x read write
     - ./read & ./write
-tags:
-    - redos
 
 run_pipe:
   stage: run
+  tags:
+    - redos
   needs:
     - build_pipe
   script:
     - cd lab_3/pipe
     - chmod +x pipe
     - ./pipe
-tags:
-    - redos
